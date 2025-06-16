@@ -15,9 +15,6 @@ export interface ImageUploaderRef {
 const ImageUploader = forwardRef<ImageUploaderRef, ImageUploaderType>(
   (
     {
-      onUploadSuccess,
-      onUploadError,
-      buttonText = "Upload",
       maxFiles = 1,
       accept = "image/*",
       disabled = false,
