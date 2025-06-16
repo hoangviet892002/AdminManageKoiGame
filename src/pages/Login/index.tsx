@@ -2,8 +2,8 @@ import React from "react";
 import { useForm } from "../../hooks/useForm";
 import { loginSchema } from "../../schemas/auth.schema";
 import { useAuth } from "../../contexts/auth.context";
-import { Form, Input, Button, Card, notification } from "antd";
-import { useMessage } from "../../contexts/message.context";
+import logo from "../../assets/logo.png"; // Import logo từ module assets
+import { Form, Input, Button, Card } from "antd";
 
 interface LoginFormValues {
   username: string;
@@ -26,16 +26,11 @@ const Login = () => {
     });
 
   return (
-    <div
-      className="login-container"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
-      <Card title="Login" style={{ width: 400 }}>
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <Card className="w-96 shadow-lg">
+        <div className="flex justify-center mb-6">
+          <img src={logo} alt="App Logo" className="h-16" />
+        </div>
         <Form layout="vertical" onFinish={handleSubmit}>
           <Form.Item
             label="Username"
@@ -46,6 +41,7 @@ const Login = () => {
               id="username"
               value={values.username}
               onChange={(e) => handleChange("username", e.target.value)}
+              className="rounded-md"
             />
           </Form.Item>
           <Form.Item
@@ -57,6 +53,7 @@ const Login = () => {
               id="password"
               value={values.password}
               onChange={(e) => handleChange("password", e.target.value)}
+              className="rounded-md"
             />
           </Form.Item>
           <Form.Item>
@@ -64,7 +61,7 @@ const Login = () => {
               type="primary"
               htmlType="submit"
               loading={loading}
-              style={{ width: "100%" }}
+              className="w-full rounded-md"
             >
               {loading ? "Logging in..." : "Login"}
             </Button>

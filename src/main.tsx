@@ -6,6 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/auth.context.tsx";
 import { MessageProvider } from "./contexts/message.context.tsx";
 
+import "./index.css";
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <MessageProvider>

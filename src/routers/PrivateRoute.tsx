@@ -10,7 +10,7 @@ interface PrivateRouteProps {
 
 const PrivateRoute = ({
   children,
-  redirectTo = "/dashboard",
+  redirectTo = "/",
   isAuthPage = false,
 }: PrivateRouteProps) => {
   const { user } = useAuth();

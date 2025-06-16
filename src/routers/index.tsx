@@ -4,6 +4,9 @@ import MainLayout from "../layouts/MainLayout";
 import AuthLayout from "../layouts/AuthLayout";
 import PrivateRoute from "./PrivateRoute";
 import { Dashboard, Login, Register } from "../pages";
+import { Screen404, Screen500, Screen501 } from "../pages/errors";
+import KoiTypes from "../pages/KoiTypes";
+import GameItems from "../pages/GameItems";
 
 const AppRoutes = () => {
   return (
@@ -21,7 +24,7 @@ const AppRoutes = () => {
       </Route>
       <Route element={<MainLayout />}>
         <Route
-          path="/dashboard"
+          path="/"
           element={
             <PrivateRoute>
               <Dashboard />
@@ -36,7 +39,26 @@ const AppRoutes = () => {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/koi-types"
+          element={
+            <PrivateRoute>
+              <KoiTypes />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/game-items"
+          element={
+            <PrivateRoute>
+              <GameItems />
+            </PrivateRoute>
+          }
+        />
       </Route>
+      <Route path="/501" element={<Screen501 />} />
+      <Route path="/500" element={<Screen500 />} />
+      <Route path="*" element={<Screen404 />} />
     </Routes>
   );
 };
