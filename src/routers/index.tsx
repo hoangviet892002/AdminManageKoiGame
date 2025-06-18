@@ -7,6 +7,7 @@ import { Dashboard, Login, Register } from "../pages";
 import { Screen404, Screen500, Screen501 } from "../pages/errors";
 import KoiTypes from "../pages/KoiTypes";
 import GameItems from "../pages/GameItems";
+import Templates from "../pages/Templates";
 
 const AppRoutes = () => {
   return (
@@ -52,6 +53,14 @@ const AppRoutes = () => {
           element={
             <PrivateRoute>
               <GameItems />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/templates"
+          element={
+            <PrivateRoute>
+              <Templates />
             </PrivateRoute>
           }
         />

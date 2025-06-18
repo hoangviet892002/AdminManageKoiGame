@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Input, Button } from "antd";
+import { Button, Input } from "antd";
+import { useState } from "react";
 
+import { useNavigate } from "react-router-dom";
 import useQueryParams, {
   createQueryParams,
 } from "../../../hooks/query/useQueryParams";
-import { useNavigate } from "react-router-dom";
 
 const GameItemsSearchbar = () => {
   const query = useQueryParams();

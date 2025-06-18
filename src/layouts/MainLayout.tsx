@@ -38,6 +38,9 @@ const MainLayout = () => {
           <Menu.Item key="game-items" onClick={() => navigate("/game-items")}>
             Manage Game Items
           </Menu.Item>
+          <Menu.Item key="templates" onClick={() => navigate("/templates")}>
+            Manage Templates
+          </Menu.Item>
         </Menu>
       </Sider>
       <Layout>

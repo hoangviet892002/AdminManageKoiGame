@@ -88,7 +88,20 @@ const ImageUploader = forwardRef<ImageUploaderRef, ImageUploaderType>(
     const imageSource = previewUrl ?? value;
 
     return (
-      <div className="">
+      <div className="flex">
+        {imageSource && (
+          <img
+            src={imageSource}
+            alt="Preview"
+            style={{
+              marginTop: 10,
+              width: "120px",
+              height: "120px",
+              objectFit: "cover",
+              borderRadius: "8px",
+            }}
+          />
+        )}
         <Upload
           beforeUpload={beforeUpload}
           name="image"
@@ -99,6 +112,7 @@ const ImageUploader = forwardRef<ImageUploaderRef, ImageUploaderType>(
           accept={accept}
           disabled={disabled}
           listType={listType}
+          style={{ marginTop: 10, width: "120px", height: "120px" }}
         >
           <input
             type="file"
@@ -111,20 +125,6 @@ const ImageUploader = forwardRef<ImageUploaderRef, ImageUploaderType>(
           />
           <Button icon={<UploadOutlined />} disabled={disabled}></Button>
         </Upload>
-
-        {imageSource && (
-          <img
-            src={imageSource}
-            alt="Preview"
-            style={{
-              marginTop: 10,
-              width: "200px",
-              height: "200px",
-              objectFit: "cover",
-              borderRadius: "8px",
-            }}
-          />
-        )}
       </div>
     );
   }

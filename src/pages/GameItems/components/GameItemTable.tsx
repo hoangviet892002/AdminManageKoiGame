@@ -1,15 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import { Table, Button, Spin, type TableProps } from "antd";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Button, Popconfirm, Table, type TableProps } from "antd";
+import { useNavigate } from "react-router-dom";
+import { itemApi } from "../../../apis/item.api";
+import { defaultValue } from "../../../constant/default-value";
 import queryKey from "../../../constant/query-key";
 import useQueryParams, {
   createQueryParams,
 } from "../../../hooks/query/useQueryParams";
-import { itemApi } from "../../../apis/item.api";
-import { useNavigate } from "react-router-dom";
 import type { ItemType } from "../../../types/ItemType";
-import { defaultValue } from "../../../constant/default-value";
 import useGameItemsStore from "../stores/gameItemsStore";
+import { useMessage } from "../../../contexts/message.context";
 
 const GameItemTable = () => {
   const query = useQueryParams();
@@ -17,6 +18,7 @@ const GameItemTable = () => {
     queryKey: [queryKey.getGameItems, query],
     queryFn: async () => await itemApi.fetchItems(query),
   });
+  const queryClient = useQueryClient();
 
   const { setCurrentItem, setModalOpen } = useGameItemsStore();
   const navigate = useNavigate();
@@ -25,6 +27,7 @@ const GameItemTable = () => {
     setCurrentItem(item);
     setModalOpen(true);
   };
+  const { showMessage } = useMessage();
 
   const columns = [
     { title: "ID", dataIndex: "_id", key: "_id" },
@@ -55,18 +58,50 @@ const GameItemTable = () => {
       title: "Actions",
       key: "actions",
       render: (item: ItemType) => (
-        <Button type="link" onClick={() => handleEdit(item)}>
-          Edit
-        </Button>
+        <div>
+          <Button type="link" onClick={() => handleEdit(item)}>
+            Edit
+          </Button>
+          <Popconfirm
+            title="Delete the item"
+            description="Are you sure to delete this item?"
+            onConfirm={async () => {
+              try {
+                const res = await itemApi.deleteItem(item._id as string);
+                if (res.isSuccess) {
+                  showMessage(
+                    "success",
+                    res.message || "Item deleted successfully"
+                  );
+                  await queryClient.invalidateQueries({
+                    queryKey: [queryKey.getGameItems],
+                  });
+                } else {
+                  showMessage("error", res.message || "Failed to delete item");
+                }
+              } catch (error) {
+                showMessage(
+                  "error",
+                  "An error occurred while deleting the item"
+                );
+              }
+            }}
+            placement="topRight"
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger>Delete</Button>
+          </Popconfirm>
+        </div>
       ),
     },
   ];
 
   const onChange: TableProps<ItemType>["onChange"] = (
     pagination,
-    filters,
-    sorter,
-    extra
+    _filters,
+    _sorter,
+    _extra
   ) => {
     const newQuery = createQueryParams({
       ...query,

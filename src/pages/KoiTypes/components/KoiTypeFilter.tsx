@@ -19,7 +19,10 @@ const KoiTypeFilter = () => {
   });
   const navigate = useNavigate();
 
-  const handleFilterChange = (key: string, value: any) => {
+  const handleFilterChange = (
+    key: string,
+    value: string | number | string[] | undefined
+  ) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
